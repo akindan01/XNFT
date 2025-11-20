@@ -316,7 +316,6 @@ const partners = ['ETHEREUM', 'POLYGON', 'METAMASK', 'COINBASE', 'BINANCE', 'OPE
                     onClick={() => setCurrentSlide(index)}
                   >
                     <div className={`w-full bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl overflow-hidden border-2 transition-all duration-300 ${isCenter ? 'border-green-400 shadow-2xl shadow-green-400/50' : 'border-gray-700'}`}>
-                      <div className="aspect-square bg-gradient-to-br from-purple-600 via-pink-500 to-blue-500 relative overflow-hidden group">
                         <img src={nft.image} alt={nft.title} className="w-full h-full object-cover" />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                         <AnimatePresence>
