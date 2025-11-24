@@ -276,135 +276,109 @@ const partners = ['ETHEREUM', 'POLYGON', 'METAMASK', 'COINBASE', 'BINANCE', 'OPE
       </nav>
 
       <section id="market" className="pt-32 pb-24 px-4 sm:px-6 lg:px-8">
-  <div className="max-w-7xl mx-auto">
-    <motion.div 
-      className="text-center mb-20"
-      variants={staggerContainer}
-      initial="hidden"
-      animate="visible"
-    >
-      <motion.h1 
-        className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 leading-tight" 
-        style={{ fontFamily: "'Orbitron', sans-serif", letterSpacing: '0.05em' }}
-        variants={fadeInUp}
-      >
-        UNIQUE COLLECTION<br />OF <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500">NFT ARTS</span>
-      </motion.h1>
-      <motion.p 
-        className="text-gray-400 text-lg max-w-2xl mx-auto"
-        variants={fadeInUp}
-      >
-        Explore the biggest and most comprehensive collection of NFT art found across all leading marketplaces.
-      </motion.p>
-    </motion.div>
-
-    
-    {/* ---CAROUSEL --- */}
-    <div className="relative max-w-6xl mx-auto mt-16 mb-16 h-[500px]">
-      <AnimatePresence>
-        {featuredNFTs.map((nft, index) => {
-          const style = getSlideStyle(index);
-          const isCenter = style.zIndex === 3;
-          
-          return (
-            <motion.div
-              key={nft.id}
-              className="absolute top-0 left-1/2 -translate-x-1/2 cursor-pointer w-72"
-              style={{ pointerEvents: isCenter ? 'auto' : 'none' }}
-              animate={style}
-              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-              onClick={() => setCurrentSlide(index)}
+        <div className="max-w-7xl mx-auto">
+          <motion.div 
+            className="text-center mb-20"
+            variants={staggerContainer}
+            initial="hidden"
+            animate="visible"
+          >
+            <motion.h1 
+              className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 leading-tight" 
+              style={{ fontFamily: "'Orbitron', sans-serif", letterSpacing: '0.05em' }}
+              variants={fadeInUp}
             >
-              <div className={`w-full bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl overflow-hidden border-2 transition-all duration-300 ${isCenter ? 'border-green-400 shadow-2xl shadow-green-400/50' : 'border-gray-700'}`}>
-                <div className="aspect-square bg-gradient-to-br from-purple-600 via-pink-500 to-blue-500 relative overflow-hidden group">
-                  <img src={nft.image} alt={nft.title} className="w-full h-full object-cover" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                  <AnimatePresence>
-                    {isCenter && (
-                      <motion.div 
-                        className="absolute top-4 left-4 bg-black/50 backdrop-blur-sm rounded-lg px-3 py-2"
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -10 }}
-                      >
-                        <p className="text-xs text-gray-300">Artist</p>
-                        <p className="text-sm font-semibold">{nft.artist}</p>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-                <div className="p-4 h-[132px] flex flex-col justify-center">
-                  <AnimatePresence>
-                    {isCenter && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        transition={{ duration: 0.3 }}
-                        className="text-center"
-                      >
-                        <p className="text-xs text-gray-400 mb-1">{nft.title}</p>
-                        <p className="text-2xl font-bold mb-2">{nft.price}</p>
-                        <motion.button 
-                          className="w-full py-2 bg-green-500 hover:bg-green-600 rounded-lg font-semibold"
-                          variants={buttonVariants}
-                          whileHover="hover"
-                          whileTap="tap"
-                        >
-                          MORE +
-                        </motion.button>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              </div>
-            </motion.div>
-          );
-        })}
-      </AnimatePresence>
-    </div>
+              UNIQUE COLLECTION<br />OF <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500">NFT ARTS</span>
+            </motion.h1>
+            <motion.p 
+              className="text-gray-400 text-lg max-w-2xl mx-auto"
+              variants={fadeInUp}
+            >
+              Explore the biggest and most comprehensive collection of NFT art found across all leading marketplaces.
+            </motion.p>
+          </motion.div>
 
-    <div className="flex justify-center gap-2 mt-12 mb-8">
-      {featuredNFTs.map((_, index) => (
-        <motion.button 
-          key={index} 
-          onClick={() => setCurrentSlide(index)} 
-          className={`h-2 rounded-full transition-all duration-300 ${index === currentSlide ? 'bg-white' : 'bg-gray-600'}`} 
-          animate={{ width: index === currentSlide ? 32 : 8 }}
-          whileHover={{ scale: 1.5 }}
-          aria-label={`Go to slide ${index + 1}`}
-        />
-      ))}
-    </div>
-  </div>
-</section>
+          
+          {/* ---CAROUSEL --- */}
+          <div className="relative max-w-6xl mx-auto mt-16 mb-16 h-[500px]">
+            <AnimatePresence>
+              {featuredNFTs.map((nft, index) => {
+                const style = getSlideStyle(index);
+                const isCenter = style.zIndex === 3;
+                
+                return (
+                  <motion.div
+                    key={nft.id}
+                    className="absolute top-0 left-1/2 -translate-x-1/2 cursor-pointer w-72"
+                    style={{ pointerEvents: isCenter ? 'auto' : 'none' }}
+                    animate={style}
+                    transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                    onClick={() => setCurrentSlide(index)}
+                  >
+                    <div className={`w-full bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl overflow-hidden border-2 transition-all duration-300 ${isCenter ? 'border-green-400 shadow-2xl shadow-green-400/50' : 'border-gray-700'}`}>
+                      <div className="aspect-square bg-gradient-to-br from-purple-600 via-pink-500 to-blue-500 relative overflow-hidden group">
+                        <img src={nft.image} alt={nft.title} className="w-full h-full object-cover" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <AnimatePresence>
+                          {isCenter && (
+                            <motion.div 
+                              className="absolute top-4 left-4 bg-black/50 backdrop-blur-sm rounded-lg px-3 py-2"
+                              initial={{ opacity: 0, x: -10 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              exit={{ opacity: 0, x: -10 }}
+                            >
+                              <p className="text-xs text-gray-300">Artist</p>
+                              <p className="text-sm font-semibold">{nft.artist}</p>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                      <div className="p-4 h-[132px] flex flex-col justify-center">
+                        <AnimatePresence>
+                          {isCenter && (
+                            <motion.div
+                              initial={{ opacity: 0, y: 10 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              exit={{ opacity: 0, y: -10 }}
+                              transition={{ duration: 0.3 }}
+                              className="text-center"
+                            >
+                              <p className="text-xs text-gray-400 mb-1">{nft.title}</p>
+                              <p className="text-2xl font-bold mb-2">{nft.price}</p>
+                              <motion.button 
+                                className="w-full py-2 bg-green-500 hover:bg-green-600 rounded-lg font-semibold"
+                                variants={buttonVariants}
+                                whileHover="hover"
+                                whileTap="tap"
+                              >
+                                MORE +
+                              </motion.button>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </AnimatePresence>
+          </div>
 
-<section className="py-24 px-4 sm:px-6 lg:px-8">
-  <motion.div 
-    className="max-w-7xl mx-auto"
-    variants={staggerContainer}
-    initial="hidden"
-    whileInView="visible"
-    viewport={{ once: true, amount: 0.25 }}
-  >
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-      {stats.map((stat) => (
-        <motion.div 
-          key={stat.label} 
-          className="text-center p-6 bg-gradient-to-br from-gray-900 to-gray-900 rounded-xl border border-gray-700 cursor-pointer"
-          variants={scaleIn}
-          whileHover={{ scale: 1.05, borderColor: 'rgb(74, 222, 128)'  }}
-          transition={{ type: 'spring', stiffness: 300 }}
-        >
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-black rounded-full mb-4">{stat.icon}</div>
-          <h3 className="text-3xl font-bold mb-2">{stat.value}</h3>
-          <p className="text-gray-400">{stat.label}</p>
-        </motion.div>
-      ))}
-    </div>
-  </motion.div>
-</section>
-      
+          <div className="flex justify-center gap-2 mt-12 mb-8">
+            {featuredNFTs.map((_, index) => (
+              <motion.button 
+                key={index} 
+                onClick={() => setCurrentSlide(index)} 
+                className={`h-2 rounded-full transition-all duration-300 ${index === currentSlide ? 'bg-white' : 'bg-gray-600'}`} 
+                animate={{ width: index === currentSlide ? 32 : 8 }}
+                whileHover={{ scale: 1.5 }}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="py-24 px-4 sm:px-6 lg:px-8">
         <motion.div 
           className="max-w-7xl mx-auto"
