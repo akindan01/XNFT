@@ -514,7 +514,7 @@ const partners = ['ETHEREUM', 'POLYGON', 'METAMASK', 'COINBASE', 'BINANCE', 'OPE
               Trending <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500">Collections</span>
             </motion.h2>
             <motion.button 
-              className="px-6 py-3 mr-60 md:mr-0 bg-black border border-white rounded-full font-semibold"
+              className="px-6 py-3 mr-56 md:mr-0 bg-black border border-white rounded-full font-semibold"
               variants={slideInRight}
               initial="hidden"
               whileInView="visible"
