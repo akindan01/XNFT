@@ -309,7 +309,7 @@ const partners = ['ETHEREUM', 'POLYGON', 'METAMASK', 'COINBASE', 'BINANCE', 'OPE
                 return (
                   <motion.div
                     key={nft.id}
-                    className="absolute top-0 left-1 -translate-x-1/2 cursor-pointer w-72"
+                    className="absolute top-0 left-1/1 -translate-x-1/2 cursor-pointer w-72"
                     style={{ pointerEvents: isCenter ? 'auto' : 'none' }}
                     animate={style}
                     transition={{ type: 'spring', stiffness: 300, damping: 30 }}
