@@ -307,14 +307,15 @@ const partners = ['ETHEREUM', 'POLYGON', 'METAMASK', 'COINBASE', 'BINANCE', 'OPE
                 const isCenter = style.zIndex === 3;
                 
                 return (
-                  <motion.div
-                    key={nft.id}
-                    className="absolute top-0  transform -translate-x-1/2 -translate-y-1/2 cursor-pointer w-72"
-                    style={{ pointerEvents: isCenter ? 'auto' : 'none' }}
-                    animate={style}
-                    transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                    onClick={() => setCurrentSlide(index)}
-                  >
+                <motion.div
+    key={nft.id}
+    className="absolute **top-0** **left-1/2** **transform** **-translate-x-1/2** cursor-pointer w-72"
+    style={{ pointerEvents: isCenter ? 'auto' : 'none' }}
+    animate={style}
+    transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+    onClick={() => setCurrentSlide(index)}
+>
+
                     <div className={`w-full bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl overflow-hidden border-2 transition-all duration-300 ${isCenter ? 'border-green-400 shadow-2xl shadow-green-400/50' : 'border-gray-700'}`}>
                       <div className="aspect-square bg-gradient-to-br from-purple-600 via-pink-500 to-blue-500 relative overflow-hidden group">
                         <img src={nft.image} alt={nft.title} className="w-full h-full object-cover" />
