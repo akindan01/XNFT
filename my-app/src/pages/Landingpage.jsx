@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Search, Menu, X, TrendingUp, Users, Shield, Zap, 
+import {
+  Search, Menu, X, TrendingUp, Users, Shield, Zap,
   Palette, Music, Camera, Layers, UserPlus, Globe, Clock, Heart,
   Twitter, Linkedin, Github
 } from 'lucide-react';
@@ -77,7 +77,7 @@ const CountdownTimer = ({ endDate }) => {
 
 
 export default function Landingpage() {
-  const [currentSlide, setCurrentSlide] = useState(2); 
+  const [currentSlide, setCurrentSlide] = useState(2);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const featuredNFTs = [
@@ -102,7 +102,7 @@ export default function Landingpage() {
     { icon: <Zap className="w-8 h-8" />, value: '24/7', label: 'Support' },
   ];
 
-const partners = ['ETHEREUM', 'POLYGON', 'METAMASK', 'COINBASE', 'BINANCE', 'OPENSEA'];
+  const partners = ['ETHEREUM', 'POLYGON', 'METAMASK', 'COINBASE', 'BINANCE', 'OPENSEA'];
 
   const categories = [
     { id: 1, name: 'Art', icon: <Palette className="w-12 h-12" />, color: 'bg-black' },
@@ -112,7 +112,7 @@ const partners = ['ETHEREUM', 'POLYGON', 'METAMASK', 'COINBASE', 'BINANCE', 'OPE
     { id: 5, name: 'Collectibles', icon: <Layers className="w-12 h-12" />, color: 'bg-black' },
     { id: 6, name: 'Virtual Worlds', icon: <Globe className="w-12 h-12" />, color: 'bg-black' },
   ];
-  
+
   const now = new Date();
   const liveAuctions = [
     { id: 10, title: 'CyberGeisha', artist: 'TokyoLabs', image: 'https://i.pinimg.com/736x/ad/1b/88/ad1b88bbec79d1b2e3ede755599ab5d4.jpg', currentBid: '4.5 ETH', endDate: new Date(now.getTime() + 2 * 60 * 60 * 1000) }, // 2 hours
@@ -163,7 +163,7 @@ const partners = ['ETHEREUM', 'POLYGON', 'METAMASK', 'COINBASE', 'BINANCE', 'OPE
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { staggerChildren: 0.15, delayChildren: 0.1 } }
   };
-  
+
   const pulse = {
     scale: [1, 1.05, 1],
     transition: {
@@ -182,18 +182,19 @@ const partners = ['ETHEREUM', 'POLYGON', 'METAMASK', 'COINBASE', 'BINANCE', 'OPE
     hover: { scale: 1.05 },
     tap: { scale: 0.95 }
   };
-  
+
   const getSlideStyle = (index) => {
     const { length } = featuredNFTs;
     const position = (index - currentSlide + length) % length;
 
-    if (position === 0) return { x: '0%', scale: 1.1, opacity: 1, zIndex: 3 };
-    if (position === 1) return { x: '50%', scale: 0.85, opacity: 0.6, zIndex: 2 };
-    if (position === length - 1) return { x: '-50%', scale: 0.85, opacity: 0.6, zIndex: 2 };
-    if (position === 2) return { x: '100%', scale: 0.7, opacity: 0.3, zIndex: 1 };
-    if (position === length - 2) return { x: '-100%', scale: 0.7, opacity: 0.3, zIndex: 1 };
-    
-    return { x: position > length / 2 ? '-150%' : '150%', scale: 0.7, opacity: 0, zIndex: 0 };
+    // Use pixel values for consistent positioning across screen sizes
+    if (position === 0) return { x: 0, scale: 1.1, opacity: 1, zIndex: 3 };
+    if (position === 1) return { x: 180, scale: 0.85, opacity: 0.6, zIndex: 2 };
+    if (position === length - 1) return { x: -180, scale: 0.85, opacity: 0.6, zIndex: 2 };
+    if (position === 2) return { x: 320, scale: 0.7, opacity: 0.3, zIndex: 1 };
+    if (position === length - 2) return { x: -320, scale: 0.7, opacity: 0.3, zIndex: 1 };
+
+    return { x: position > length / 2 ? -400 : 400, scale: 0.7, opacity: 0, zIndex: 0 };
   };
 
   return (
@@ -201,8 +202,8 @@ const partners = ['ETHEREUM', 'POLYGON', 'METAMASK', 'COINBASE', 'BINANCE', 'OPE
       <nav className="fixed top-0 w-full z-50 bg-black/70 backdrop-blur-lg border-b border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <motion.div 
-              className="text-2xl font-bold tracking-wider" 
+            <motion.div
+              className="text-2xl font-bold tracking-wider"
               style={{ fontFamily: "'Orbitron', sans-serif" }}
               whileHover={{ scale: 1.05 }}
             >
@@ -226,7 +227,7 @@ const partners = ['ETHEREUM', 'POLYGON', 'METAMASK', 'COINBASE', 'BINANCE', 'OPE
             </div>
 
             <div className="hidden md:flex items-center space-x-4">
-              <motion.button 
+              <motion.button
                 className="p-2 text-gray-300 hover:text-white hover:bg-gray-800 rounded-lg"
                 variants={buttonVariants}
                 whileHover="hover"
@@ -234,7 +235,7 @@ const partners = ['ETHEREUM', 'POLYGON', 'METAMASK', 'COINBASE', 'BINANCE', 'OPE
               >
                 <Search className="w-5 h-5" />
               </motion.button>
-              <motion.button 
+              <motion.button
                 className="px-6 py-2 bg-green-500 hover:bg-green-600 rounded-full font-semibold"
                 variants={buttonVariants}
                 whileHover="hover"
@@ -244,8 +245,8 @@ const partners = ['ETHEREUM', 'POLYGON', 'METAMASK', 'COINBASE', 'BINANCE', 'OPE
               </motion.button>
             </div>
 
-            <motion.button 
-              className="md:hidden p-2" 
+            <motion.button
+              className="md:hidden p-2"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               whileTap={{ scale: 0.9 }}
               aria-label="Toggle mobile menu"
@@ -256,10 +257,10 @@ const partners = ['ETHEREUM', 'POLYGON', 'METAMASK', 'COINBASE', 'BINANCE', 'OPE
 
           <AnimatePresence>
             {mobileMenuOpen && (
-              <motion.div 
-                initial={{ height: 0, opacity: 0 }} 
-                animate={{ height: "auto", opacity: 1 }} 
-                exit={{ height: 0, opacity: 0 }} 
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
                 transition={{ duration: 0.3, ease: "easeInOut" }}
                 className="md:hidden overflow-hidden"
               >
@@ -277,20 +278,20 @@ const partners = ['ETHEREUM', 'POLYGON', 'METAMASK', 'COINBASE', 'BINANCE', 'OPE
 
       <section id="market" className="pt-32 pb-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <motion.div 
+          <motion.div
             className="text-center mb-20"
             variants={staggerContainer}
             initial="hidden"
             animate="visible"
           >
-            <motion.h1 
-              className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 leading-tight" 
+            <motion.h1
+              className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 leading-tight"
               style={{ fontFamily: "'Orbitron', sans-serif", letterSpacing: '0.05em' }}
               variants={fadeInUp}
             >
               UNIQUE COLLECTION<br />OF <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500">NFT ARTS</span>
             </motion.h1>
-            <motion.p 
+            <motion.p
               className="text-gray-400 text-lg max-w-2xl mx-auto"
               variants={fadeInUp}
             >
@@ -298,30 +299,30 @@ const partners = ['ETHEREUM', 'POLYGON', 'METAMASK', 'COINBASE', 'BINANCE', 'OPE
             </motion.p>
           </motion.div>
 
-          
+
           {/* ---CAROUSEL --- */}
           <div className="relative max-w-6xl mx-auto mt-16 mb-16 h-[500px]">
             <AnimatePresence>
               {featuredNFTs.map((nft, index) => {
                 const style = getSlideStyle(index);
                 const isCenter = style.zIndex === 3;
-                
+
                 return (
-              <motion.div
-    key={nft.id}
-    className="absolute left-1/2 transform -translate-x-1/2 cursor-pointer **w-5/6 md:w-72**"
-    style={{ pointerEvents: isCenter ? 'auto' : 'none' }}
-    animate={style}
-    transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-    onClick={() => setCurrentSlide(index)}
->
+                  <motion.div
+                    key={nft.id}
+                    className="absolute top-0 left-0 right-0 mx-auto cursor-pointer w-5/6 md:w-72"
+                    style={{ pointerEvents: isCenter ? 'auto' : 'none' }}
+                    animate={style}
+                    transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                    onClick={() => setCurrentSlide(index)}
+                  >
                     <div className={`w-full bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl overflow-hidden border-2 transition-all duration-300 ${isCenter ? 'border-green-400 shadow-2xl shadow-green-400/50' : 'border-gray-700'}`}>
                       <div className="aspect-square bg-gradient-to-br from-purple-600 via-pink-500 to-blue-500 relative overflow-hidden group">
                         <img src={nft.image} alt={nft.title} className="w-full h-full object-cover" />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                         <AnimatePresence>
                           {isCenter && (
-                            <motion.div 
+                            <motion.div
                               className="absolute top-4 left-4 bg-black/50 backdrop-blur-sm rounded-lg px-3 py-2"
                               initial={{ opacity: 0, x: -10 }}
                               animate={{ opacity: 1, x: 0 }}
@@ -345,7 +346,7 @@ const partners = ['ETHEREUM', 'POLYGON', 'METAMASK', 'COINBASE', 'BINANCE', 'OPE
                             >
                               <p className="text-xs text-gray-400 mb-1">{nft.title}</p>
                               <p className="text-2xl font-bold mb-2">{nft.price}</p>
-                              <motion.button 
+                              <motion.button
                                 className="w-full py-2 bg-green-500 hover:bg-green-600 rounded-lg font-semibold"
                                 variants={buttonVariants}
                                 whileHover="hover"
@@ -366,10 +367,10 @@ const partners = ['ETHEREUM', 'POLYGON', 'METAMASK', 'COINBASE', 'BINANCE', 'OPE
 
           <div className="flex justify-center gap-2 mt-12 mb-8">
             {featuredNFTs.map((_, index) => (
-              <motion.button 
-                key={index} 
-                onClick={() => setCurrentSlide(index)} 
-                className={`h-2 rounded-full transition-all duration-300 ${index === currentSlide ? 'bg-white' : 'bg-gray-600'}`} 
+              <motion.button
+                key={index}
+                onClick={() => setCurrentSlide(index)}
+                className={`h-2 rounded-full transition-all duration-300 ${index === currentSlide ? 'bg-white' : 'bg-gray-600'}`}
                 animate={{ width: index === currentSlide ? 32 : 8 }}
                 whileHover={{ scale: 1.5 }}
                 aria-label={`Go to slide ${index + 1}`}
@@ -380,7 +381,7 @@ const partners = ['ETHEREUM', 'POLYGON', 'METAMASK', 'COINBASE', 'BINANCE', 'OPE
       </section>
 
       <section className="py-24 px-4 sm:px-6 lg:px-8">
-        <motion.div 
+        <motion.div
           className="max-w-7xl mx-auto"
           variants={staggerContainer}
           initial="hidden"
@@ -389,11 +390,11 @@ const partners = ['ETHEREUM', 'POLYGON', 'METAMASK', 'COINBASE', 'BINANCE', 'OPE
         >
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat) => (
-              <motion.div 
-                key={stat.label} 
+              <motion.div
+                key={stat.label}
                 className="text-center p-6 bg-gradient-to-br from-gray-900 to-gray-900 rounded-xl border border-gray-700 cursor-pointer"
                 variants={scaleIn}
-                whileHover={{ scale: 1.05, borderColor: 'rgb(74, 222, 128)'  }}
+                whileHover={{ scale: 1.05, borderColor: 'rgb(74, 222, 128)' }}
                 transition={{ type: 'spring', stiffness: 300 }}
               >
                 <div className="inline-flex items-center justify-center w-16 h-16 bg-black rounded-full mb-4">{stat.icon}</div>
@@ -407,7 +408,7 @@ const partners = ['ETHEREUM', 'POLYGON', 'METAMASK', 'COINBASE', 'BINANCE', 'OPE
 
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <motion.h2 
+          <motion.h2
             className="text-5xl font-bold text-center mb-16"
             variants={fadeInUp}
             initial="hidden"
@@ -443,7 +444,7 @@ const partners = ['ETHEREUM', 'POLYGON', 'METAMASK', 'COINBASE', 'BINANCE', 'OPE
 
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <motion.h2 
+          <motion.h2
             className="text-5xl font-bold text-center mb-16"
             variants={fadeInUp}
             initial="hidden"
@@ -476,7 +477,7 @@ const partners = ['ETHEREUM', 'POLYGON', 'METAMASK', 'COINBASE', 'BINANCE', 'OPE
                 <div className="p-6 space-y-4">
                   <h3 className="font-bold text-2xl mb-1">{nft.title}</h3>
                   <p className="text-gray-400 text-sm">by {nft.artist}</p>
-                  
+
                   <CountdownTimer endDate={nft.endDate} />
 
                   <div className="flex items-center justify-between pt-4">
@@ -484,7 +485,7 @@ const partners = ['ETHEREUM', 'POLYGON', 'METAMASK', 'COINBASE', 'BINANCE', 'OPE
                       <p className="text-xs text-gray-400">Current Bid</p>
                       <p className="text-xl font-bold text-green-400">{nft.currentBid}</p>
                     </div>
-                    <motion.button 
+                    <motion.button
                       className="px-6 py-3 bg-black border border-white rounded-full font-semibold"
                       variants={buttonVariants}
                       animate={pulse}
@@ -504,7 +505,7 @@ const partners = ['ETHEREUM', 'POLYGON', 'METAMASK', 'COINBASE', 'BINANCE', 'OPE
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col sm:flex-row items-center justify-between mb-12">
-            <motion.h2 
+            <motion.h2
               className="text-5xl font-bold mb-4 sm:mb-0"
               variants={slideInLeft}
               initial="hidden"
@@ -513,62 +514,67 @@ const partners = ['ETHEREUM', 'POLYGON', 'METAMASK', 'COINBASE', 'BINANCE', 'OPE
             >
               Trending <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500">Collections</span>
             </motion.h2>
-            <motion.button 
-              className="px-6 py-3 mr-56 md:mr-0 bg-black border border-white rounded-full font-semibold"
-              variants={slideInRight}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.5 }}
-              whileHover={{ scale: 1.05, boxShadow: "0px 0px 15px rgb(74, 222, 128)" }}
-              whileTap="tap"
-            >
-              View All
-            </motion.button>
-          </div>
+<<<<<<< HEAD
+  <motion.button
+    className="px-6 py-3 mr-56 md:mr-0 bg-black border border-white rounded-full font-semibold"
+=======
+            <motion.button
+              className="px-6 py-3 mr-62 md:mr-0 bg-black border border-white rounded-full font-semibold"
+>>>>>>> ff53632 (Fix carousel display issues - use pixel-based positioning)
+    variants={slideInRight}
+    initial="hidden"
+    whileInView="visible"
+    viewport={{ once: true, amount: 0.5 }}
+    whileHover={{ scale: 1.05, boxShadow: "0px 0px 15px rgb(74, 222, 128)" }}
+    whileTap="tap"
+  >
+    View All
+  </motion.button>
+          </div >
 
-          <motion.div 
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.1 }}
-          >
-            {trendingNFTs.map((nft) => (
-              <motion.div 
-                key={nft.id} 
-                className="bg-gray-900 rounded-xl overflow-hidden border border-gray-700 cursor-pointer group"
-                variants={fadeInUp}
-                whileHover={{ y: -5, borderColor: 'rgb(74, 222, 128)' }}
-                transition={{ type: 'spring', stiffness: 300 }}
+    <motion.div
+      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+      variants={staggerContainer}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.1 }}
+    >
+      {trendingNFTs.map((nft) => (
+        <motion.div
+          key={nft.id}
+          className="bg-gray-900 rounded-xl overflow-hidden border border-gray-700 cursor-pointer group"
+          variants={fadeInUp}
+          whileHover={{ y: -5, borderColor: 'rgb(74, 222, 128)' }}
+          transition={{ type: 'spring', stiffness: 300 }}
+        >
+          <div className="aspect-square relative overflow-hidden">
+            <img src={nft.image} alt={nft.title} className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          </div>
+          <div className="p-4">
+            <h3 className="font-bold text-lg mb-1">{nft.title}</h3>
+            <p className="text-gray-400 text-sm mb-2">by {nft.artist}</p>
+            <div className="flex items-center justify-between">
+              <span className="text-green-400 font-semibold">{nft.price}</span>
+              <motion.button
+                className="px-4 py-1 bg-black rounded-full text-sm"
+                variants={buttonVariants}
+                whileHover="hover"
+                whileTap="tap"
               >
-                <div className="aspect-square relative overflow-hidden">
-                  <img src={nft.image} alt={nft.title} className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                </div>
-                <div className="p-4">
-                  <h3 className="font-bold text-lg mb-1">{nft.title}</h3>
-                  <p className="text-gray-400 text-sm mb-2">by {nft.artist}</p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-green-400 font-semibold">{nft.price}</span>
-                    <motion.button 
-                      className="px-4 py-1 bg-black rounded-full text-sm"
-                      variants={buttonVariants}
-                      whileHover="hover"
-                      whileTap="tap"
-                    >
-                      Buy Now
-                    </motion.button>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
+                Buy Now
+              </motion.button>
+            </div>
+          </div>
+        </motion.div>
+      ))}
+    </motion.div>
+        </div >
+      </section >
 
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <motion.h2 
+          <motion.h2
             className="text-5xl font-bold text-center mb-16"
             variants={fadeInUp}
             initial="hidden"
@@ -593,7 +599,7 @@ const partners = ['ETHEREUM', 'POLYGON', 'METAMASK', 'COINBASE', 'BINANCE', 'OPE
                 transition={{ type: 'spring', stiffness: 300 }}
               >
                 <div className="relative mb-4">
-                  <span 
+                  <span
                     className="absolute -top-2 -left-2 w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-black font-bold text-sm"
                     style={{ fontFamily: "'Orbitron', sans-serif" }}
                   >
@@ -605,7 +611,7 @@ const partners = ['ETHEREUM', 'POLYGON', 'METAMASK', 'COINBASE', 'BINANCE', 'OPE
                 <p className="text-sm text-gray-400 mb-4">
                   Volume: <span className="text-green-400">{creator.volume}</span>
                 </p>
-                <motion.button 
+                <motion.button
                   className="px-5 py-2 bg-black rounded-full text-sm font-semibold"
                   variants={buttonVariants}
                   whileHover="hover"
@@ -621,7 +627,7 @@ const partners = ['ETHEREUM', 'POLYGON', 'METAMASK', 'COINBASE', 'BINANCE', 'OPE
 
       <section id="aboutus" className="py-24 px-4 sm:px-6 lg:px-8 relative">
         <div className="absolute top-1/2 right-0 -translate-y-1/2 w-96 h-96 bg-green-400/20 rounded-full blur-[100px] -z-10" />
-  <div className="max-w-7xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div
               initial="hidden"
@@ -629,13 +635,13 @@ const partners = ['ETHEREUM', 'POLYGON', 'METAMASK', 'COINBASE', 'BINANCE', 'OPE
               viewport={{ once: true }}
               variants={staggerContainer}
             >
-              <motion.h2 
+              <motion.h2
                 className="text-5xl font-bold mb-8 leading-tight"
                 variants={fadeInUp}
               >
                 About <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500">Us</span>
               </motion.h2>
-              
+
               <motion.div className="space-y-6 text-lg text-gray-400" variants={fadeInUp}>
                 <p>
                   XNFT is not just a marketplace; it is a comprehensive ecosystem standing at the forefront of the <span className="text-white font-semibold">Web3 revolution</span>. As a cutting-edge platform, we are dedicated to redefining the concept of digital ownership and empowering a global network of artists, creators, and collectors.
@@ -648,7 +654,7 @@ const partners = ['ETHEREUM', 'POLYGON', 'METAMASK', 'COINBASE', 'BINANCE', 'OPE
                 </p>
               </motion.div>
 
-              <motion.div 
+              <motion.div
                 className="mt-10 flex items-center gap-6"
                 variants={fadeInUp}
               >
@@ -658,22 +664,22 @@ const partners = ['ETHEREUM', 'POLYGON', 'METAMASK', 'COINBASE', 'BINANCE', 'OPE
               </motion.div>
             </motion.div>
 
-            <motion.div 
+            <motion.div
               className="relative h-[600px] hidden lg:block"
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
             >
-      
+
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-96 bg-green-400 rounded-2xl rotate-[-6deg] opacity-50 blur-sm" />
-              <img 
-                src="https://i.pinimg.com/736x/e1/59/c2/e159c2f008e34498a7384af8874d7d23.jpg" 
-                alt="About Main" 
+              <img
+                src="https://i.pinimg.com/736x/e1/59/c2/e159c2f008e34498a7384af8874d7d23.jpg"
+                alt="About Main"
                 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-96 object-cover rounded-2xl shadow-2xl z-10 border border-gray-700"
               />
-              
-              <motion.div 
+
+              <motion.div
                 className="absolute top-20 right-10 w-48 h-48 bg-gray-800 rounded-xl p-2 border border-gray-700 shadow-xl z-20"
                 animate={{ y: [0, -15, 0] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
@@ -681,7 +687,7 @@ const partners = ['ETHEREUM', 'POLYGON', 'METAMASK', 'COINBASE', 'BINANCE', 'OPE
                 <img src="https://i.pinimg.com/736x/74/b8/8e/74b88e8d20b2b3bc2b6eb9c306372808.jpg" className="w-full h-full object-cover rounded-lg" alt="Detail 1" />
               </motion.div>
 
-              <motion.div 
+              <motion.div
                 className="absolute bottom-20 left-10 w-40 h-40 bg-gray-800 rounded-xl p-2 border border-gray-700 shadow-xl z-20"
                 animate={{ y: [0, 15, 0] }}
                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
@@ -696,7 +702,7 @@ const partners = ['ETHEREUM', 'POLYGON', 'METAMASK', 'COINBASE', 'BINANCE', 'OPE
 
       <section id='wallet' className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <motion.h2 
+          <motion.h2
             className="text-5xl font-bold text-center mb-16"
             variants={fadeInUp}
             initial="hidden"
@@ -706,7 +712,7 @@ const partners = ['ETHEREUM', 'POLYGON', 'METAMASK', 'COINBASE', 'BINANCE', 'OPE
             How It <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500">Works</span>
           </motion.h2>
 
-          <motion.div 
+          <motion.div
             className="grid grid-cols-1 md:grid-cols-3 gap-8"
             variants={staggerContainer}
             initial="hidden"
@@ -718,14 +724,14 @@ const partners = ['ETHEREUM', 'POLYGON', 'METAMASK', 'COINBASE', 'BINANCE', 'OPE
               { num: 2, title: 'Create your collection', desc: 'Upload your artwork and create your own NFT collection with custom properties' },
               { num: 3, title: 'List them for sale', desc: 'Choose between auctions, fixed-price listings, and declining-price listings' }
             ].map((item) => (
-              <motion.div 
-                key={item.num} 
+              <motion.div
+                key={item.num}
                 className="text-center p-8 bg-gray-900 rounded-xl border border-gray-700"
                 variants={fadeInUp}
                 whileHover={{ scale: 1.03, borderColor: 'rgb(74, 222, 128)' }}
                 transition={{ type: 'spring', stiffness: 300 }}
               >
-                <motion.div 
+                <motion.div
                   className="w-20 h-20 bg-black rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-6"
                   whileHover={{ scale: 1.1, rotate: 10 }}
                 >
@@ -740,7 +746,7 @@ const partners = ['ETHEREUM', 'POLYGON', 'METAMASK', 'COINBASE', 'BINANCE', 'OPE
       </section>
 
       <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <motion.div 
+        <motion.div
           className="max-w-4xl mx-auto text-center"
           variants={scaleIn}
           initial="hidden"
@@ -751,16 +757,16 @@ const partners = ['ETHEREUM', 'POLYGON', 'METAMASK', 'COINBASE', 'BINANCE', 'OPE
             <h2 className="text-4xl font-bold mb-6">Start Your NFT Journey Today</h2>
             <p className="text-xl mb-8 opacity-90">Join thousands of artists and collectors in the largest NFT marketplace</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <motion.button 
+              <motion.button
                 className="px-8 py-4 bg-white text-black rounded-full font-bold"
-                whileHover={{ scale: 1.05, y: -2 }} 
+                whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
               >
                 Create NFT
               </motion.button>
-              <motion.button 
+              <motion.button
                 className="px-8 py-4 bg-transparent border-2 border-white rounded-full font-bold"
-                whileHover={{ scale: 1.05, y: -2 }} 
+                whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.95 }}
               >
                 Explore Market
@@ -771,33 +777,33 @@ const partners = ['ETHEREUM', 'POLYGON', 'METAMASK', 'COINBASE', 'BINANCE', 'OPE
       </section>
 
       <section id="company" className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-900/50">
-  <div className="max-w-7xl mx-auto">
-    <motion.div
-      className=" pt-10"
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true }}
-      variants={fadeInUp}
-    >
-      <h3 className="text-center text-gray-500 text-sm tracking-widest uppercase mb-10 font-semibold">Backed by the Best</h3>
-      <div className="flex flex-wrap justify-center items-center gap-12 md:gap-20 opacity-70">
-         {partners.map((partner) => (
-           <motion.span 
-              key={partner}
-              className="text-2xl md:text-3xl font-bold text-gray-600 hover:text-white transition-colors cursor-pointer select-none"
-              style={{ fontFamily: "'Orbitron', sans-serif" }}
-              whileHover={{ scale: 1.1 }}
-           >
-             {partner}
-           </motion.span>
-         ))}
-      </div>
-    </motion.div>
-  </div>
-</section>
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            className=" pt-10"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeInUp}
+          >
+            <h3 className="text-center text-gray-500 text-sm tracking-widest uppercase mb-10 font-semibold">Backed by the Best</h3>
+            <div className="flex flex-wrap justify-center items-center gap-12 md:gap-20 opacity-70">
+              {partners.map((partner) => (
+                <motion.span
+                  key={partner}
+                  className="text-2xl md:text-3xl font-bold text-gray-600 hover:text-white transition-colors cursor-pointer select-none"
+                  style={{ fontFamily: "'Orbitron', sans-serif" }}
+                  whileHover={{ scale: 1.1 }}
+                >
+                  {partner}
+                </motion.span>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
 
       <footer className="bg-gray-900 border-t border-gray-900 py-12 px-4 sm:px-6 lg:px-8">
-        <motion.div 
+        <motion.div
           className="max-w-7xl mx-auto"
           initial="hidden"
           whileInView="visible"
@@ -815,7 +821,7 @@ const partners = ['ETHEREUM', 'POLYGON', 'METAMASK', 'COINBASE', 'BINANCE', 'OPE
                 <h4 className="font-bold mb-4 text-white">{col.title}</h4>
                 <ul className="space-y-2 text-gray-400">
                   {col.links.map((link) => (
-                    <motion.li 
+                    <motion.li
                       key={link}
                       whileHover={{ x: 5, color: '#ffffff' }}
                       transition={{ type: 'spring', stiffness: 400 }}
@@ -833,6 +839,6 @@ const partners = ['ETHEREUM', 'POLYGON', 'METAMASK', 'COINBASE', 'BINANCE', 'OPE
           </div>
         </motion.div>
       </footer>
-    </div>
+    </div >
   );
 }
