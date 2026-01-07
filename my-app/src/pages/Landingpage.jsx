@@ -187,14 +187,14 @@ export default function Landingpage() {
     const { length } = featuredNFTs;
     const position = (index - currentSlide + length) % length;
 
-    // Use pixel values for consistent positioning across screen sizes
-    if (position === 0) return { x: 0, scale: 1.1, opacity: 1, zIndex: 3 };
-    if (position === 1) return { x: 180, scale: 0.85, opacity: 0.6, zIndex: 2 };
-    if (position === length - 1) return { x: -180, scale: 0.85, opacity: 0.6, zIndex: 2 };
-    if (position === 2) return { x: 320, scale: 0.7, opacity: 0.3, zIndex: 1 };
-    if (position === length - 2) return { x: -320, scale: 0.7, opacity: 0.3, zIndex: 1 };
+    // Use percentage of viewport width for responsive positioning
+    if (position === 0) return { x: '0%', scale: 1.1, opacity: 1, zIndex: 3 };
+    if (position === 1) return { x: '55%', scale: 0.85, opacity: 0.6, zIndex: 2 };
+    if (position === length - 1) return { x: '-55%', scale: 0.85, opacity: 0.6, zIndex: 2 };
+    if (position === 2) return { x: '110%', scale: 0.7, opacity: 0.3, zIndex: 1 };
+    if (position === length - 2) return { x: '-110%', scale: 0.7, opacity: 0.3, zIndex: 1 };
 
-    return { x: position > length / 2 ? -400 : 400, scale: 0.7, opacity: 0, zIndex: 0 };
+    return { x: position > length / 2 ? '-150%' : '150%', scale: 0.7, opacity: 0, zIndex: 0 };
   };
 
   return (
@@ -301,7 +301,7 @@ export default function Landingpage() {
 
 
           {/* ---CAROUSEL --- */}
-          <div className="relative max-w-6xl mx-auto mt-16 mb-16 h-[500px]">
+          <div className="relative max-w-6xl mx-auto mt-16 mb-16 h-[500px] flex items-start justify-center">
             <AnimatePresence>
               {featuredNFTs.map((nft, index) => {
                 const style = getSlideStyle(index);
@@ -310,8 +310,12 @@ export default function Landingpage() {
                 return (
                   <motion.div
                     key={nft.id}
-                    className="absolute top-0 left-0 right-0 mx-auto cursor-pointer w-5/6 md:w-72"
-                    style={{ pointerEvents: isCenter ? 'auto' : 'none' }}
+                    className="absolute top-0 cursor-pointer w-64 sm:w-72"
+                    style={{
+                      pointerEvents: isCenter ? 'auto' : 'none',
+                      left: '50%',
+                      marginLeft: '-8rem',  // Half of w-64 (16rem)
+                    }}
                     animate={style}
                     transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                     onClick={() => setCurrentSlide(index)}
