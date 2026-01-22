@@ -79,6 +79,15 @@ const CountdownTimer = ({ endDate }) => {
 export default function Landingpage() {
   const [currentSlide, setCurrentSlide] = useState(2);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 1200);
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const isMobile = windowWidth < 768;
 
   const featuredNFTs = [
     { id: 1, title: 'Blue Hair Punk', price: '1.5 ETH', artist: 'CryptoArtist', image: 'https://i.pinimg.com/736x/d0/b9/e1/d0b9e111eb8fe18f869afae0ff4e1119.jpg' },
@@ -187,12 +196,15 @@ export default function Landingpage() {
     const { length } = featuredNFTs;
     const position = (index - currentSlide + length) % length;
 
-    // Use percentage of viewport width for responsive positioning
-    if (position === 0) return { x: '0%', scale: 1.1, opacity: 1, zIndex: 3 };
-    if (position === 1) return { x: '55%', scale: 0.85, opacity: 0.6, zIndex: 2 };
-    if (position === length - 1) return { x: '-55%', scale: 0.85, opacity: 0.6, zIndex: 2 };
-    if (position === 2) return { x: '110%', scale: 0.7, opacity: 0.3, zIndex: 1 };
-    if (position === length - 2) return { x: '-110%', scale: 0.7, opacity: 0.3, zIndex: 1 };
+    // Responsive offsets
+    const xOffset = isMobile ? '15%' : '55%'; // Smaller offset on mobile to keep side cards visible but subtle
+    const farXOffset = isMobile ? '30%' : '110%';
+
+    if (position === 0) return { x: '0%', scale: isMobile ? 1 : 1.1, opacity: 1, zIndex: 3 };
+    if (position === 1) return { x: xOffset, scale: 0.85, opacity: 0.6, zIndex: 2 };
+    if (position === length - 1) return { x: `-${xOffset}`, scale: 0.85, opacity: 0.6, zIndex: 2 };
+    if (position === 2) return { x: farXOffset, scale: 0.7, opacity: 0.3, zIndex: 1 };
+    if (position === length - 2) return { x: `-${farXOffset}`, scale: 0.7, opacity: 0.3, zIndex: 1 };
 
     return { x: position > length / 2 ? '-150%' : '150%', scale: 0.7, opacity: 0, zIndex: 0 };
   };
@@ -258,17 +270,33 @@ export default function Landingpage() {
           <AnimatePresence>
             {mobileMenuOpen && (
               <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
-                className="md:hidden overflow-hidden"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                className="fixed inset-0 top-16 bg-black/95 backdrop-blur-xl z-40 md:hidden flex flex-col p-8"
               >
-                <div className="py-4 space-y-2">
-                  {['ABOUT US', 'MARKET', 'WALLET', 'COMPANY'].map(item => (
-                    <a key={item} href={`#${item.toLowerCase().replace(' ', '')}`} className={`block px-4 py-2 hover:bg-gray-800 rounded ${item === 'MARKET' ? 'text-green-400' : ''}`}>{item}</a>
+                <div className="flex flex-col space-y-6 text-center mt-10">
+                  {['ABOUT US', 'MARKET', 'WALLET', 'COMPANY'].map((item, index) => (
+                    <motion.a
+                      key={item}
+                      href={`#${item.toLowerCase().replace(' ', '')}`}
+                      className={`text-2xl font-bold tracking-widest ${item === 'MARKET' ? 'text-green-400' : 'text-gray-300'} hover:text-white transition-colors`}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {item}
+                    </motion.a>
                   ))}
-                  <button className="w-full mt-2 px-6 py-2 bg-green-500 hover:bg-green-600 rounded-full">SUPPORT</button>
+                  <motion.button
+                    className="w-full mt-8 py-4 bg-gradient-to-r from-green-500 to-green-600 rounded-full font-bold text-xl shadow-lg shadow-green-500/20"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.4 }}
+                  >
+                    SUPPORT
+                  </motion.button>
                 </div>
               </motion.div>
             )}
@@ -285,7 +313,7 @@ export default function Landingpage() {
             animate="visible"
           >
             <motion.h1
-              className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 leading-tight"
+              className="text-4xl sm:text-6xl lg:text-7xl font-bold mb-6 leading-tight"
               style={{ fontFamily: "'Orbitron', sans-serif", letterSpacing: '0.05em' }}
               variants={fadeInUp}
             >
@@ -310,13 +338,16 @@ export default function Landingpage() {
                 return (
                   <motion.div
                     key={nft.id}
-                    className="absolute top-0 cursor-pointer w-64 sm:w-72"
+                    className="absolute top-0 cursor-pointer w-[280px] sm:w-[340px] md:w-[400px]"
                     style={{
                       pointerEvents: isCenter ? 'auto' : 'none',
                       left: '50%',
-                      marginLeft: '-8rem',  // Half of w-64 (16rem)
+                      x: '-50%', // Centering using translateX via framer motion
                     }}
-                    animate={style}
+                    animate={{
+                      ...style,
+                      x: `calc(-50% + ${style.x})`, // Combine centering with carousel offset
+                    }}
                     transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                     onClick={() => setCurrentSlide(index)}
                   >
@@ -413,7 +444,7 @@ export default function Landingpage() {
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <motion.h2
-            className="text-5xl font-bold text-center mb-16"
+            className="text-3xl sm:text-5xl font-bold text-center mb-16"
             variants={fadeInUp}
             initial="hidden"
             whileInView="visible"
@@ -449,7 +480,7 @@ export default function Landingpage() {
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <motion.h2
-            className="text-5xl font-bold text-center mb-16"
+            className="text-3xl sm:text-5xl font-bold text-center mb-16"
             variants={fadeInUp}
             initial="hidden"
             whileInView="visible"
@@ -510,7 +541,7 @@ export default function Landingpage() {
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col sm:flex-row items-center justify-between mb-12">
             <motion.h2
-              className="text-5xl font-bold mb-4 sm:mb-0"
+              className="text-3xl sm:text-5xl font-bold mb-4 sm:mb-0"
               variants={slideInLeft}
               initial="hidden"
               whileInView="visible"
@@ -518,68 +549,63 @@ export default function Landingpage() {
             >
               Trending <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500">Collections</span>
             </motion.h2>
-<<<<<<< HEAD
-  <motion.button
-    className="px-6 py-3 mr-56 md:mr-0 bg-black border border-white rounded-full font-semibold"
-=======
             <motion.button
-              className="px-6 py-3 mr-62 md:mr-0 bg-black border border-white rounded-full font-semibold"
->>>>>>> ff53632 (Fix carousel display issues - use pixel-based positioning)
-    variants={slideInRight}
-    initial="hidden"
-    whileInView="visible"
-    viewport={{ once: true, amount: 0.5 }}
-    whileHover={{ scale: 1.05, boxShadow: "0px 0px 15px rgb(74, 222, 128)" }}
-    whileTap="tap"
-  >
-    View All
-  </motion.button>
+              className="px-6 py-3 bg-black border border-white rounded-full font-semibold"
+              variants={slideInRight}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.5 }}
+              whileHover={{ scale: 1.05, boxShadow: "0px 0px 15px rgb(74, 222, 128)" }}
+              whileTap="tap"
+            >
+              View All
+            </motion.button>
           </div >
 
-    <motion.div
-      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
-      variants={staggerContainer}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.1 }}
-    >
-      {trendingNFTs.map((nft) => (
-        <motion.div
-          key={nft.id}
-          className="bg-gray-900 rounded-xl overflow-hidden border border-gray-700 cursor-pointer group"
-          variants={fadeInUp}
-          whileHover={{ y: -5, borderColor: 'rgb(74, 222, 128)' }}
-          transition={{ type: 'spring', stiffness: 300 }}
-        >
-          <div className="aspect-square relative overflow-hidden">
-            <img src={nft.image} alt={nft.title} className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-          </div>
-          <div className="p-4">
-            <h3 className="font-bold text-lg mb-1">{nft.title}</h3>
-            <p className="text-gray-400 text-sm mb-2">by {nft.artist}</p>
-            <div className="flex items-center justify-between">
-              <span className="text-green-400 font-semibold">{nft.price}</span>
-              <motion.button
-                className="px-4 py-1 bg-black rounded-full text-sm"
-                variants={buttonVariants}
-                whileHover="hover"
-                whileTap="tap"
+          <motion.div
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.1 }}
+          >
+            {trendingNFTs.map((nft) => (
+              <motion.div
+                key={nft.id}
+                className="bg-gray-900 rounded-xl overflow-hidden border border-gray-700 cursor-pointer group"
+                variants={fadeInUp}
+                whileHover={{ y: -5, borderColor: 'rgb(74, 222, 128)' }}
+                transition={{ type: 'spring', stiffness: 300 }}
               >
-                Buy Now
-              </motion.button>
-            </div>
-          </div>
-        </motion.div>
-      ))}
-    </motion.div>
+                <div className="aspect-square relative overflow-hidden">
+                  <img src={nft.image} alt={nft.title} className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                </div>
+                <div className="p-4">
+                  <h3 className="font-bold text-lg mb-1">{nft.title}</h3>
+                  <p className="text-gray-400 text-sm mb-2">by {nft.artist}</p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-green-400 font-semibold">{nft.price}</span>
+                    <motion.button
+                      className="px-4 py-1 bg-black rounded-full text-sm"
+                      variants={buttonVariants}
+                      whileHover="hover"
+                      whileTap="tap"
+                    >
+                      Buy Now
+                    </motion.button>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
         </div >
       </section >
 
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <motion.h2
-            className="text-5xl font-bold text-center mb-16"
+            className="text-3xl sm:text-5xl font-bold text-center mb-16"
             variants={fadeInUp}
             initial="hidden"
             whileInView="visible"
@@ -640,7 +666,7 @@ export default function Landingpage() {
               variants={staggerContainer}
             >
               <motion.h2
-                className="text-5xl font-bold mb-8 leading-tight"
+                className="text-3xl sm:text-5xl font-bold mb-8 leading-tight"
                 variants={fadeInUp}
               >
                 About <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500">Us</span>
@@ -707,7 +733,7 @@ export default function Landingpage() {
       <section id='wallet' className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <motion.h2
-            className="text-5xl font-bold text-center mb-16"
+            className="text-3xl sm:text-5xl font-bold text-center mb-16"
             variants={fadeInUp}
             initial="hidden"
             whileInView="visible"
